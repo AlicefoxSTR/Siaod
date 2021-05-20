@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+  <style>
+    body {
+      background-image: url("ff.jpg");
+      color: #fff;
+      background-size: 100%;
+      font-size: 20pt;
+    }
+    </style>
+
+<p>
+</p>
+
+<br />
+</br>
+
+<div align="center" color="red" id="hi">Say hello! <input type="button" value="hi" onclick="hello()" style="width:45Px;height:35Px;border-radius: 5px;background: #fff"/></div>
+<script>
+
+var hi_div = document.getElementById("hi");
+
+function hello(){
+
+hi.innerHTML = 'Hello World!';
+}
+</script>
+
+<br />
+</br>
+<input type="button" onclick="se()" value="Сортировка выбором" style="width:150Px;height:45Px;border-radius: 4px;background: #ffe23b"/>
+<br />
+</br>
+<input type="button" onclick="vs()" value="Сортировка вставкой" style="width:150Px;height:45Px;border-radius: 4px;background: #ffe23b"/>
+<br />
+</br>
+<input type="button" onclick="buble()" value="Сортировка обменом" style="width:150Px;height:45Px;border-radius: 4px;background: #ffe23b"/>
+<br />
+</br>
+<input type="button" onclick="sh()" value="Сортировка Шелла" style="width:150Px;height:45Px;border-radius: 4px;background: #ffe23b"/>
+<br />
+</br>
+<input type="button" onclick="pir()" value="Пирамидальная сортировка" style="width:150Px;height:45Px;white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;border-radius: 4px;background: #ffe23b""/>
+<br />
+</br>
+<input type="button" onclick="quick()" value="Быстрая сортировка" style="width:150Px;height:45Px;border-radius: 4px;background: #ffe23b"/>
+<br />
+</br>
+
+<script type="text/javascript">
+  let A1 = [5, 2, 4, 6, 1, 3];
+  function se()
+  {
+function selectionSort(A1)       // A - массив, который нужно
+{           
+                        // отсортировать по возрастанию.
+    var n = A1.length;
+    for (var i = 0; i < n-1; i++)
+     { var min = i;
+       for (var j = i+1; j < n; j++)
+        { if (A1[j] < A1[min]) min = j; } 
+       var t = A1[min]; A1[min] = A1[ i ]; A1[ i ] = t;
+     }                    
+    return A1;    // На выходе сортированный по возрастанию массив A.
+  }
+  selectionSort(A1);
+    alert (A1);
+}
+
+function vs()
+  {
+function Vstavka(A2)       // A - массив, который нужно
+{                               // отсортировать по возрастанию.
+    var n = A2.length;
+    for (var i = 0; i < n; i++)
+     { var v = A2[ i ], j = i-1; //v-след. эл-т
+       while (j >= 0 && A2[j] > v) //если тек. эл-т больше след. меняем, 
+                                  //то местами
+        { A2[j+1] = A2[j]; j--; }
+       A2[j+1] = v;
+     }                    
+    return A2;    // На выходе сортированный по возрастанию массив A.
+}
+let A2 = [1, 8, 5, 4];
+Vstavka(A2);
+alert (A2);
+  }
+
+
+function buble()
+  {
+function BubbleSort(A3)       // A - массив, который нужно
+{                            // отсортировать по возрастанию.
+    var n = A3.length;
+    for (var i = 0; i < n-1; i++)
+     { for (var j = 0; j < n-1-i; j++)
+        { if (A3[j+1] < A3[j])
+           { var t = A3[j+1]; A3[j+1] = A3[j]; A3[j] = t; }
+        }
+     }                     
+    return A3;    // На выходе сортированный по возрастанию массив A.
+}
+let A3 = [1, 2, 5, 4, 3] ;
+BubbleSort(A3);
+alert (A3);
+  }
+
+  function sh()
+  {
+function Shell(A4)
+{
+   {
+    const l = A4.length;
+    let gap = Math.floor(l / 2);
+    while (gap >= 1) {
+        for (let i = gap; i < l; i++) {
+            const current = A4[i]; //тек эл-т
+            let j = i; //индекс эл-та
+            while (j > 0 && A4[j - gap] > current) {
+                A4[j] = A4[j - gap]; // 
+                j -= gap; //уменьшаем на шаг
+            }
+            A4[j] = current;
+        }
+        gap = Math.floor(gap / 2);
+    }
+    return A4;
+};
+}
+let A4 = [10, 9, 8, 6, 7] ;
+Shell(A4);
+alert (A4);
+  }
+
+  function pir()
+  {
+function Piramida(A5)  //** ПОСТОЯННО УМЕНЬШАЕМ 
+{
+    if (A5.length == 0) return [];
+    var n = A5.length, i = Math.floor(n/2), j, k, t;
+    while (true)
+    { if (i > 0) t = A5[--i];
+      else { n--;
+             if (n == 0) return A5;
+             t = A5[n];  A5[n] = A5[0];
+           }        
+      j = i;  k = j*2+1;
+      while (k < n)
+       { if (k+1 < n && A5[k+1] > A5[k]) k++;
+         if (A5[k] > t)
+          { A5[j] = A5[k];  j = k;  k = j*2+1; }
+         else break;
+       }
+      A5[j] = t; 
+    }
+}
+let A5 = [10, 9, 8, 6, 5] ;
+Piramida(A5);
+alert (A5);
+  }
+
+  function quick()
+  {
+function quicksort(array) {
+
+if (array.length < 1) {
+    return array;    // базовый случай
+} else { 
+     let pivotIndex = Math.floor(array.length / 2); 
+let pivot = array[pivotIndex];
+let less = [];
+let greater = [];
+  for ( i =0; i < array.length; i++) {
+    if ( i ==  pivotIndex) continue;
+    if (array[i] <= pivot) {
+      less.push(array[i]);
+    } else {
+      greater.push(array[i]);
+    }
+ 
+  }
+     let result = [];
+return result.concat(quicksort(less), pivot, quicksort(greater));
+}
+};
+
+let array = [1, 7, 2, 3, 4] ;
+//quicksort(A6);
+alert (quicksort(array));
+  } 
+
+</script>
+<p>
+
+</p>
+
+
+</html>

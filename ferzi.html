@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+    <style>
+        .board { border:2px solid black; margin:4px; display:inline-block; }
+        .cell  { border:1px solid black; width:20px; height:20px; font-size: 20px; display:inline-block; }
+        .white { background-color:white; color:black;}
+        .black { background-color:#555;  color:white;}
+     </style>
+<pre>
+<script>
+    var size = 8;  // размер доски
+var queens = Array(size);  // положение ферзей
+for(var c=0; c < size; c++) 
+   queens[c] = 0;  // всех ставим на первую строку (это не решение
+
+function Show() // функция печати доски
+{
+   document.write('<div class="board">');         // открываем тег div
+   for(var r=0; r < size; r++){                   // по строкам
+      for(var c=0; c < size; c++){                // по колонкам
+         var ch  = queens[c]===r ? "&#9819;" : " "; //если значение массива queens[c] совпадает с номером строки r, выводится ферзь, иначе - пробел
+         var knd = 'class="cell ' + ( (r+c) % 2 ? 'black"': 'white"'); //выясняем чётность суммы r+c. При чётной сумме выбирается класс стиля class="cell white", а для нечётной: class="cell black"
+         document.write('<div ', knd, '>', ch, '</div>');
+      }
+      document.write('<br>');                     // переход на новую строку
+   }
+   document.write('</div>');                      // закрываем тег div
+}
+</script>
+</pre>
+
+<script>
+    var nSolutions = 0;  // число найденных решений
+ 
+ function Solve(n)
+ {
+    if(n===undefined) n = 0;  //если не нашли еще ферзей
+  
+    if(n >= size){  // всех расставили
+       if(nSolutions++ < 5)   // подсчитываем число решений
+          Show();  // и выводим первые 5
+       return;  // перебор окончен
+    }
+  
+    for(var r=0, c; r < size; r++){  // бежим по строчкам сверху-вниз
+  
+       for(c=0; c < n; c++)  // перебираем уже поставленных ферзей
+          if(   queens[c] === r  // если они стоят на этой строке
+             || Math.abs(queens[c]-r) === n-c ) // или находятся с новым на одной диагонали
+             break;     // вариант не подходит - выходим из цикла
+  
+       if(c === n){   //если ни кто не бьет ферзя
+          queens[n] = r; // ставим его туда
+          Solve(n+1);  // и подбираем следующего 
+       }
+    }
+ }
+ Solve();                  
+</script>
+
+</html>
